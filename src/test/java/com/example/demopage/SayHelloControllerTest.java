@@ -40,6 +40,22 @@ class SayHelloControllerTest {
         assertThat(response.getValue()).isEqualTo("Hello, Samurai!");
     }
 
+    @Test
+    void missingParameter() throws Exception {
+        String url = "/api/v1/hello";
+
+        MvcResult result = mockMvc
+                .perform(post(url)
+                        .contentType(APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+
+        String body = result.getResponse().getContentAsString();
+        ErrorResponse response = fromJson(body, ErrorResponse.class);
+        assertThat(response.message()).isEqualTo("Missing parameter 'name'");
+    }
+
     private <T> T fromJson(String json, Class<T> klass) throws JsonProcessingException {
         return objectMapper.readValue(json, klass);
     }
