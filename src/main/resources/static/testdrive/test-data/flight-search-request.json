@@ -1,0 +1,10 @@
+{
+  "departure-airport": "LIN",
+  "arrival-airport"  : "FCO",
+  "departure-date"   : "2023-09-01",
+  "return-date"      : "2023-09-10",
+  "adults"           : 1,
+  "children"         : 0,
+  "infants"          : 0,
+  "currency"         : "EUR"
+}

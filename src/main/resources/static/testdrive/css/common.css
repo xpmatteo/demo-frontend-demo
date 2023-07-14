@@ -26,3 +26,9 @@ textarea.tiny {
 .button {
     line-height: 2em;
 }
+
+label {
+    width: 12em;
+    display: inline-block;
+    text-align: right;
+}
