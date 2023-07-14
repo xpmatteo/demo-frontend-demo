@@ -1,0 +1,28 @@
+body {
+    font-family: "Open Sans", Tahoma, sans-serif;
+}
+
+textarea {
+    width: 90ex;
+    height: 40ex;
+}
+
+textarea.smaller-area {
+    height: 19ex;
+}
+
+textarea.tiny {
+    height: 10px;
+}
+
+.success {
+    background: #e5fbe5
+}
+
+.error {
+    background: lightpink;
+}
+
+.button {
+    line-height: 2em;
+}
