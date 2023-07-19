@@ -9,7 +9,10 @@ import java.time.LocalDate;
 public class FlightSearchController {
 
     @PostMapping("/api/v1/flight-search")
-    public FlightSearchResponse prices(String request) {
-        return FlightSearchResponse.generateRandom(LocalDate.now(), LocalDate.now().plusDays(30));
+    public FlightSearchResponse prices(FlightSearchRequest request) {
+        System.out.println(request.toString());
+        return FlightSearchResponse.generateRandom(
+                LocalDate.parse(request.departureDate()),
+                LocalDate.parse(request.returnDate()));
     }
 }

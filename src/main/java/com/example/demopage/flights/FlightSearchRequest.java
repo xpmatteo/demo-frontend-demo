@@ -5,8 +5,8 @@ public record FlightSearchRequest(
         String arrivalAirport,
         String departureDate,
         String returnDate,
-        int numberOfAdults,
-        int numberOfChildren,
-        int numberOfInfants,
-        String currencyCode
+        int adults,
+        int children,
+        int infants,
+        String currency
         ) {}
