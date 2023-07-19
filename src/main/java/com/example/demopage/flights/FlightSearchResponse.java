@@ -5,7 +5,6 @@ import java.time.LocalDate;
 public record FlightSearchResponse(String[][] prices) {
 
     public static FlightSearchResponse generateRandom(LocalDate departureDate, LocalDate returnDate) {
-        int width = 2;
         String[][] prices = new String[][]{
                 {
                         "", returnDate.minusDays(2).toString(), returnDate.minusDays(1).toString(), returnDate.toString(), returnDate.plusDays(1).toString(), returnDate.plusDays(2).toString(),
