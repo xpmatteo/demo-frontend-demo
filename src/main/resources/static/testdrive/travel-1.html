@@ -125,36 +125,35 @@
         const departureDate = todayPlus(departureDateOffset)
         const returnDate = todayPlus(departureDateOffset + duration);
         let searchInput = JSON.parse($("#search-input").val());
-        searchInput["departure-date"] = departureDate;
-        searchInput["return-date"] = returnDate;
+        searchInput["departureDate"] = departureDate;
+        searchInput["returnDate"] = returnDate;
         $("#search-input").val(indent(searchInput));
     }
 
     function updateDepartureAirport() {
-        const departureAirport = $("#departure-airport").val();
         let searchInput = JSON.parse($("#search-input").val());
-        searchInput["departure-airport"] = departureAirport;
+        searchInput.departureAirport = $("#departure-airport").val();
         $("#search-input").val(indent(searchInput));
     }
 
     function updateArrivalAirport() {
-        const arrivalAirport = $("#arrival-airport").val();
         let searchInput = JSON.parse($("#search-input").val());
-        searchInput["arrival-airport"] = arrivalAirport;
+        searchInput.arrivalAirport = $("#arrival-airport").val();
         $("#search-input").val(indent(searchInput));
     }
 
     $(document).ready(() => {
         $("#search-button").click(searchRequest);
-        $.get("test-data/flight-search-request.json", (data) =>
-            $("#search-input").val(indent(data)));
+        $.get("test-data/flight-search-request.json", (data) => {
+            $("#search-input").val(indent(data));
+            updateBothDates();
+            updateDepartureAirport();
+            updateArrivalAirport();
+        });
         $("#departure-date").change(updateBothDates);
         $("#travel-duration").change(updateBothDates);
         $("#departure-airport").change(updateDepartureAirport);
         $("#arrival-airport").change(updateArrivalAirport);
-        updateBothDates();
-        updateDepartureAirport();
-        updateArrivalAirport();
     });
 
     function cleanUp() {
