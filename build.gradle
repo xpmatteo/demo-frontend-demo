@@ -14,6 +14,21 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	/*
+	  The devtools module provides fast application restarts and live reload.
+	  It is automatically excluded from the WAR file that is created when you use the war task.
+	  So, it only works when you run the application in the IDE, or through the bootRun gradle task.
+	  In order for it to work in IntelliJ, you need to enable a bunch of options.  What worked for me
+	  is following this video: https://www.youtube.com/watch?v=BvIM9gNTDM4
+	  And then, in the IntelliJ preferences gradle options, check the "Build and run using IntelliJ" option.
+
+	  In order for static resources to be automatically reloaded in the browser, you need to add the
+	  following properties to the src/main/resources/application.properties file:
+
+	  	spring.web.resources.static-locations[0]=file:src/main/resources/static/
+		spring.web.resources.static-locations[1]=classpath:/static/
+
+	 */
 	compileOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
