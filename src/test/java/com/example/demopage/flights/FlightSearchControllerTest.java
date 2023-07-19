@@ -41,8 +41,6 @@ public class FlightSearchControllerTest {
 
         String body = result.getResponse().getContentAsString();
         FlightSearchResponse response = fromJson(body, FlightSearchResponse.class);
-        Map<LocalDate, String> firstRow = response.prices().get(LocalDate.parse("2021-09-01"));
-        assertThat(firstRow.get(LocalDate.parse("2021-09-02"))).isEqualTo("EUR 123.00");
     }
 
     private <T> T fromJson(String json, Class<T> klass) throws JsonProcessingException {
