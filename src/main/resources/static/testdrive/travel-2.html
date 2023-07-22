@@ -113,7 +113,21 @@
 </div>
 
 <script id="search-output-table-template" type="text/x-ejs-template">
-PIPPO
+  <table>
+    <tr>
+      <% for (let col=0; col< response.prices.length; col++) { %>
+      <th><%= response.prices[0][col] %></th>
+      <% } %>
+    </tr>
+    <% for (let row=1; row< response.prices.length; row++) { %>
+    <tr>
+      <th><%= response.prices[row][0] %></th>
+      <% for (let col=1; col< response.prices.length; col++) { %>
+      <td><%= response.prices[row][col] %></td>
+      <% } %>
+    </tr>
+    <% } %>
+  </table>
 </script>
 
 <script type="module">
@@ -154,7 +168,7 @@ PIPPO
         console.log("change");
         let source = $("#search-output-table-template").text();
         const template = ejs.compile(source);
-        const response = $("#search-output").val()
+        const response = JSON.parse($("#search-output").val());
         $("#search-output-table").html(template({response: response}))
     }
 
