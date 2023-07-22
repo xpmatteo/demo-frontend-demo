@@ -19,7 +19,7 @@ export function searchRequest() {
     });
 }
 
-function onSearchError(jq) {
+export function onSearchError(jq) {
     const d = jq.responseJSON ? jq.responseJSON : jq;
     $("#search-output").removeClass("success").addClass("error").val(indent(d));
 }

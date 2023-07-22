@@ -16,7 +16,7 @@ public record FlightSearchResponse(String[][] prices) {
                         departureDate.minusDays(1).toString(), "€99", "€103", "€299", "€201", "€112",
                 },
                 {
-                        departureDate.toString(), "€101", "€102", "€199", "95", "€101",
+                        departureDate.toString(), "€101", "€102", "€199", "€95", "€101",
                 },
                 {
                         departureDate.plusDays(1).toString(), "€100", "€103", "€299", "€201", "€102",
