@@ -16,6 +16,19 @@
     form {
         padding-bottom: 1em;
     }
+    #search-output-table td {
+        text-align: right;
+    }
+
+    #search-output-table td, #search-output-table th {
+        text-align: right;
+        padding-left: 10px ;
+        padding-right: 5px ;
+    }
+
+    #search-output-table tr:nth-child(4), #search-output-table td:nth-child(5), #search-output-table th:nth-child(5) {
+        background-color: #C7F6B6;
+    }
   </style>
 </head>
 
@@ -111,7 +124,7 @@
 </div>
 
 <script id="search-output-table-template" type="text/x-ejs-template">
-  <table>
+  <table class="striped">
     <tr>
       <% for (let col=0; col< response.prices.length; col++) { %>
       <th><%= response.prices[0][col] %></th>

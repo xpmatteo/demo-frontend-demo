@@ -32,3 +32,13 @@ label {
     display: inline-block;
     text-align: right;
 }
+
+table {
+    border-collapse: collapse;
+}
+.striped tr:nth-child(even) {
+    background: #EEE
+}
+.striped tr:nth-child(odd) {
+    background: #FFF
+}
