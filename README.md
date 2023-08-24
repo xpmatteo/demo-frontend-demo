@@ -1,3 +1,7 @@
+# News
+
+There is now <a href="https://martinfowler.com/articles/demo-front-end.html">an article detailing the Demo Front-End pattern</a>!
+
 # About
 
 This is a "hello, world" demo for the [Demo Frontends for API-Only Products](https://www.thoughtworks.com/radar/techniques/demo-frontends-for-api-only-products) technique that appears on the March 2023 edition of the Thoughtworks Technology Radar.
