@@ -3,20 +3,19 @@
 <head>
   <title>Flight Search :: Test Drive</title>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/common.css" />
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-          integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/common.css"/>
   <style>
-    textarea {
-        height: 28ex;
-    }
-    form {
-        padding-bottom: 1em;
-    }
+      textarea {
+          height: 28ex;
+      }
+
+      form {
+          padding-bottom: 1em;
+      }
   </style>
 </head>
 
@@ -102,7 +101,7 @@
     <option>DELETE</option>
   </select>
   <input id="search-path" type="text" value="/api/v1/flight-search" style="width: 27ex">
-  <img src="images/spinner.gif" alt="" id="search-spinner" class="spinner" hidden>
+  <img src="images/spinner.gif" alt="" id="search-spinner" class="spinner">
 </div>
 
 <div>
@@ -110,8 +109,81 @@
 </div>
 
 <script type="module">
-    import {indent, hideSpinners} from "./js/ajax.js";
-    import { searchRequest } from "./js/travel-common.js";
+    import { ajax, indent } from "./js/ajax-lib.js";
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        document.getElementById("search-button").addEventListener("click", searchRequest);
+
+        await ajax({
+            spinnerId: "search-spinner",
+            method: "GET",
+            path: "test-data/flight-search-request.json",
+            output: "search-input",
+        })
+
+        updateBothDates();
+        updateDepartureAirport();
+        updateArrivalAirport();
+        onChange("departure-date", updateBothDates);
+        onChange("travel-duration", updateBothDates);
+        onChange("departure-airport", updateDepartureAirport);
+        onChange("arrival-airport", updateArrivalAirport);
+    });
+
+    async function searchRequest() {
+        await ajax({
+            spinnerId: "search-spinner",
+            method: "search-method",
+            path: "search-path",
+            data: "search-input",
+            output: "search-output",
+            colorize: true,
+        })
+    }
+
+    function onChange(elementId, action) {
+        document.getElementById(elementId).addEventListener("change", action)
+    }
+
+    function updateBothDates() {
+        const departureDateOffset = getValueAsInteger("departure-date");
+        const duration = getValueAsInteger("travel-duration");
+        const departureDate = todayPlus(departureDateOffset)
+        const returnDate = todayPlus(departureDateOffset + duration);
+        let searchInput = getValueAsObject("search-input");
+        searchInput["departureDate"] = departureDate;
+        searchInput["returnDate"] = returnDate;
+        setJson("search-input", searchInput);
+    }
+
+    function updateDepartureAirport() {
+        let searchInput = getValueAsObject("search-input");
+        searchInput.departureAirport = getValue("departure-airport");
+        setJson("search-input", searchInput);
+    }
+
+    function updateArrivalAirport() {
+        let searchInput = getValueAsObject("search-input");
+        searchInput.arrivalAirport = getValue("arrival-airport");
+        setJson("search-input", searchInput);
+    }
+
+    function getValue(elementId) {
+        return document.getElementById(elementId).value;
+    }
+
+    function getValueAsInteger(elementId) {
+        return parseInt(getValue(elementId));
+    }
+
+    function getValueAsObject(elementId) {
+        return JSON.parse(getValue(elementId));
+    }
+
+    function setJson(elementId, object) {
+        const element = document.getElementById(elementId);
+        return element.value = indent(object);
+    }
 
     function todayPlus(offset) {
         const today = new Date();
@@ -119,43 +191,6 @@
         date.setDate(today.getDate() + parseInt(offset));
         return date.toISOString().substring(0, 10);
     }
-
-    function updateBothDates() {
-        const departureDateOffset = parseInt($("#departure-date").val());
-        const duration = parseInt($("#travel-duration").val());
-        const departureDate = todayPlus(departureDateOffset)
-        const returnDate = todayPlus(departureDateOffset + duration);
-        let searchInput = JSON.parse($("#search-input").val());
-        searchInput["departureDate"] = departureDate;
-        searchInput["returnDate"] = returnDate;
-        $("#search-input").val(indent(searchInput));
-    }
-
-    function updateDepartureAirport() {
-        let searchInput = JSON.parse($("#search-input").val());
-        searchInput.departureAirport = $("#departure-airport").val();
-        $("#search-input").val(indent(searchInput));
-    }
-
-    function updateArrivalAirport() {
-        let searchInput = JSON.parse($("#search-input").val());
-        searchInput.arrivalAirport = $("#arrival-airport").val();
-        $("#search-input").val(indent(searchInput));
-    }
-
-    $(document).ready(() => {
-        $("#search-button").click(searchRequest);
-        $.get("test-data/flight-search-request.json", (data) => {
-            $("#search-input").val(indent(data));
-            updateBothDates();
-            updateDepartureAirport();
-            updateArrivalAirport();
-        });
-        $("#departure-date").change(updateBothDates);
-        $("#travel-duration").change(updateBothDates);
-        $("#departure-airport").change(updateDepartureAirport);
-        $("#arrival-airport").change(updateArrivalAirport);
-    });
 </script>
 
 </body>

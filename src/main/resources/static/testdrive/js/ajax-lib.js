@@ -50,7 +50,7 @@ function updateColor(helloOutput, ok) {
     }
 }
 
-function indent(json) {
+export function indent(json) {
     return JSON.stringify(json, null, 2)
 }
 
