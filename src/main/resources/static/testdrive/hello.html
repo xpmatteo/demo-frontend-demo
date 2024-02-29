@@ -32,71 +32,28 @@
 </div>
 
 <script type="module">
+    import { ajax } from "./js/ajax-lib.js";
 
     document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("hello-button").addEventListener("click", sayHello);
 
-        // thanks https://youmightnotneedjquery.com/
-        showSpinner()
-        const response = await fetch('/testdrive/test-data/hello.json');
-        const body = await response.text();
-        document.querySelector('#hello-input').value = indent(parse(body));
-        hideSpinner()
+        await ajax({
+            spinnerId: "hello-spinner",
+            method: "GET",
+            path: "/testdrive/test-data/hello.json",
+            output: "hello-input",
+        })
     });
 
     async function sayHello() {
-        cleanUp();
-        showSpinner();
-        const method = document.getElementById("hello-method").value;
-        const data = document.getElementById("hello-input").value;
-        const path = document.getElementById("hello-path").value;
-        const helloOutput = document.getElementById("hello-output");
-        try {
-            const response = await fetch(path, {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: data
-            });
-            updateColor(helloOutput, response.ok);
-            helloOutput.value = indent(parse(await response.text()));
-        } catch (ex) {
-            updateColor(helloOutput, false);
-            helloOutput.value = ex;
-        } finally {
-            hideSpinner();
-        }
-    }
-
-    function cleanUp() {
-        document.getElementById("hello-output").value = ''
-    }
-
-    function updateColor(helloOutput, ok) {
-        if (!ok) {
-            helloOutput.classList.remove("success");
-            helloOutput.classList.add("error");
-        } else {
-            helloOutput.classList.add("success");
-            helloOutput.classList.remove("error");
-        }
-    }
-
-    function indent(json) {
-        return JSON.stringify(json, null, 2)
-    }
-
-    function parse(string) {
-        return JSON.parse(string);
-    }
-
-    function showSpinner() {
-        document.getElementById("hello-spinner").style.display = '';
-    }
-
-    function hideSpinner() {
-        document.getElementById("hello-spinner").style.display = 'none';
+        await ajax({
+            spinnerId: "hello-spinner",
+            method: "hello-method",
+            data: "hello-input",
+            path: "hello-path",
+            output: "hello-output",
+            colorize: true,
+        })
     }
 </script>
 
