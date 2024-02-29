@@ -36,14 +36,14 @@
 
 <script type="module">
 
-    $.ajaxSetup({
-        complete: hideSpinners,
+    document.addEventListener("DOMContentLoaded", async () => {
+        const response = await fetch('/testdrive/test-data/hello.json');
+        const body = await response.text();
+        document.querySelector('#hello-input').value = indent(parse(body));
     });
 
-    $(document).ready(() => {
-        $("#hello-button").click(sayHelloRequest);
-        $.get("/testdrive/test-data/hello.json", (data) =>
-            $("#hello-input").val(indent(data)))
+    $.ajaxSetup({
+        complete: hideSpinners,
     });
 
     function cleanUp() {
@@ -80,6 +80,10 @@
 
     function indent(json) {
         return JSON.stringify(json, null, 2)
+    }
+
+    function parse(string) {
+        return JSON.parse(string);
     }
 </script>
 
