@@ -8,7 +8,7 @@ public class HelloRequest {
     private String name;
 
     @JsonCreator
-    public HelloRequest(String name) {
+    public HelloRequest(@JsonProperty("name") String name) {
         this.name = name;
     }
 
