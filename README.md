@@ -8,7 +8,7 @@ This is a "hello, world" demo for the [Demo Frontends for API-Only Products](htt
 
 The intent is to show how easy it is to set up a demo page that works better than tools like Postman for test-driving an API.
 
-This particular project uses jQuery because it works!  Of course you can make it work with React or VanillaJS.  The important thing is to avoid setting up a separate Javascript build for this, because we want the demo page to be instantly available after a change to either the Spring Boot app, or the HTML/JavaScript code.
+This particular project uses vanilla JavaScript, because it's very simple. Of course you could use React or other libraries; the important thing is to avoid setting up a separate JavaScript build for this, because we want the demo page to be instantly available after a change to either the Spring Boot app, or the HTML/JavaScript code.
 
 # How to
 
