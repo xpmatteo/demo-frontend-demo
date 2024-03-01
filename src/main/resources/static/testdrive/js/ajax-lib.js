@@ -4,12 +4,12 @@ export async function ajax({
                                method,
                                data,
                                path,
-                               output,
+                               target,
                                colorize = false,
                            }) {
     show(spinnerId);
-    const outputElement = document.getElementById(output);
-    outputElement.value = '';
+    const targetElement = document.getElementById(target);
+    targetElement.value = '';
     try {
         const response = await fetch(find(path), {
             method: find(method),
@@ -18,11 +18,11 @@ export async function ajax({
                 'Content-Type': 'application/json'
             }
         });
-        if (colorize) updateColor(outputElement, response.ok);
-        outputElement.value = indent(parse(await response.text()));
+        if (colorize) updateColor(targetElement, response.ok);
+        targetElement.value = indent(parse(await response.text()));
     } catch (ex) {
-        if (colorize) updateColor(outputElement, false);
-        outputElement.value = ex;
+        if (colorize) updateColor(targetElement, false);
+        targetElement.value = ex;
     } finally {
         hide(spinnerId);
     }
@@ -40,13 +40,13 @@ function find(elementIdOrLiteral) {
     return elementIdOrLiteral;
 }
 
-function updateColor(helloOutput, ok) {
+function updateColor(element, ok) {
     if (!ok) {
-        helloOutput.classList.remove("success");
-        helloOutput.classList.add("error");
+        element.classList.remove("success");
+        element.classList.add("error");
     } else {
-        helloOutput.classList.add("success");
-        helloOutput.classList.remove("error");
+        element.classList.add("success");
+        element.classList.remove("error");
     }
 }
 
@@ -59,9 +59,15 @@ function parse(string) {
 }
 
 function show(elementId) {
-    document.getElementById(elementId).style.display = '';
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = '';
+    }
 }
 
 function hide(elementId) {
-    document.getElementById(elementId).style.display = 'none';
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = 'none';
+    }
 }
